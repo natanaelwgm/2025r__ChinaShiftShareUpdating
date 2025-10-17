@@ -131,54 +131,82 @@ generate_sakernas_raw <- function(dim_geo, dim_sector, years, params, seed) {
     }
   }
 
-  list(
-    raw = do.call(rbind, raw_records),
-    shares_2000 = shares_2000,
-    shares_2008 = shares_2008
-  )
+  do.call(rbind, raw_records)
 }
 
-process_sakernas_raw <- function(sakernas_bundle, dim_geo, dim_sector) {
-  raw_df <- sakernas_bundle$raw
-  shares_2000 <- sakernas_bundle$shares_2000
-  shares_2008 <- sakernas_bundle$shares_2008
+process_sakernas_raw <- function(sakernas_df, dim_geo, dim_sector, params) {
+  if (!all(c("district_bps_2000", "isic_rev3_3d", "year") %in% names(sakernas_df))) {
+    stop("Sakernas raw data is missing required columns.")
+  }
 
-  raw_df$employment <- 1
-  fact_labor <- aggregate(
-    employment ~ district_bps_2000 + isic_rev3_3d + year,
-    data = raw_df,
-    sum
-  )
-  names(fact_labor)[names(fact_labor) == "employment"] <- "labor_count"
+  if ("worker_id" %in% names(sakernas_df)) {
+    fact_labor <- aggregate(
+      worker_id ~ district_bps_2000 + isic_rev3_3d + year,
+      data = sakernas_df,
+      length
+    )
+  } else if ("employment" %in% names(sakernas_df)) {
+    fact_labor <- aggregate(
+      employment ~ district_bps_2000 + isic_rev3_3d + year,
+      data = sakernas_df,
+      sum
+    )
+  } else {
+    sakernas_df$employment <- 1
+    fact_labor <- aggregate(
+      employment ~ district_bps_2000 + isic_rev3_3d + year,
+      data = sakernas_df,
+      sum
+    )
+  }
+  names(fact_labor)[names(fact_labor) == tail(names(fact_labor), 1)] <- "labor_count"
 
   district_ids <- dim_geo$district_bps_2000
   industry_ids <- dim_sector$isic_rev3_3d
+  share_list <- list()
+  base_years <- params$analysis$base_years
 
-  share_lookup_2000 <- data.frame(
-    district_bps_2000 = rep(district_ids, each = length(industry_ids)),
-    isic_rev3_3d = rep(industry_ids, times = length(district_ids)),
-    employment_share_base2000 = as.vector(shares_2000),
-    stringsAsFactors = FALSE
+  for (base_year in base_years) {
+    share_matrix <- matrix(0, nrow = length(district_ids), ncol = length(industry_ids))
+    base_subset <- fact_labor[fact_labor$year == base_year, , drop = FALSE]
+    if (nrow(base_subset) > 0) {
+      totals <- aggregate(
+        labor_count ~ district_bps_2000,
+        data = base_subset,
+        sum
+      )
+      base_subset <- merge(
+        base_subset,
+        totals,
+        by = "district_bps_2000",
+        suffixes = c("", "_total"),
+        all.x = TRUE
+      )
+      base_subset$district_bps_2000 <- as.integer(base_subset$district_bps_2000)
+      base_subset$isic_rev3_3d <- as.integer(base_subset$isic_rev3_3d)
+      base_subset$labor_count_total[base_subset$labor_count_total <= 0] <- NA_real_
+      base_subset$share <- base_subset$labor_count / base_subset$labor_count_total
+      valid <- !is.na(base_subset$share)
+      d_idx <- match(base_subset$district_bps_2000[valid], district_ids)
+      i_idx <- match(base_subset$isic_rev3_3d[valid], industry_ids)
+      valid <- valid & !is.na(d_idx) & !is.na(i_idx)
+      share_matrix[cbind(d_idx[valid], i_idx[valid])] <- base_subset$share[valid]
+    }
+    share_list[[as.character(base_year)]] <- share_matrix
+  }
+
+  fact_labor <- fact_labor[order(fact_labor$district_bps_2000, fact_labor$isic_rev3_3d, fact_labor$year), ]
+
+  result <- list(
+    fact_labor = fact_labor,
+    shares = share_list
   )
 
-  share_lookup_2008 <- data.frame(
-    district_bps_2000 = rep(district_ids, each = length(industry_ids)),
-    isic_rev3_3d = rep(industry_ids, times = length(district_ids)),
-    employment_share_base2008 = as.vector(shares_2008),
-    stringsAsFactors = FALSE
-  )
+  for (name in names(share_list)) {
+    result[[paste0("shares_", name)]] <- share_list[[name]]
+  }
 
-  fact_labor <- merge(fact_labor, share_lookup_2000, by = c("district_bps_2000", "isic_rev3_3d"), all.x = TRUE)
-  fact_labor <- merge(fact_labor, share_lookup_2008, by = c("district_bps_2000", "isic_rev3_3d"), all.x = TRUE)
-
-  fact_labor[is.na(fact_labor$employment_share_base2000), "employment_share_base2000"] <- 1 / length(industry_ids)
-  fact_labor[is.na(fact_labor$employment_share_base2008), "employment_share_base2008"] <- 1 / length(industry_ids)
-
-  list(
-    fact_labor = fact_labor[order(fact_labor$district_bps_2000, fact_labor$isic_rev3_3d, fact_labor$year), ],
-    shares_2000 = shares_2000,
-    shares_2008 = shares_2008
-  )
+  result
 }
 
 generate_trade_raw <- function(dim_sector, partners, flows, years, concordance, seed) {
@@ -306,14 +334,23 @@ generate_exposures <- function(shock_df, labor_info, dim_geo, dim_sector, params
 
   district_ids <- dim_geo$district_bps_2000
   industry_ids <- dim_sector$isic_rev3_3d
-  share_lookup_2000 <- labor_info$shares_2000
-  share_lookup_2008 <- labor_info$shares_2008
+  share_list <- labor_info$shares
 
   exposures <- vector("list", length = length(base_years) * length(flows) * length(partners))
   idx <- 1L
 
   for (base_year in base_years) {
-    share_matrix <- if (base_year == 2000) share_lookup_2000 else share_lookup_2008
+    share_key <- as.character(base_year)
+    share_matrix <- NULL
+    if (!is.null(share_list)) {
+      share_matrix <- share_list[[share_key]]
+    }
+    if (is.null(share_matrix)) {
+      share_matrix <- labor_info[[paste0("shares_", share_key)]]
+    }
+    if (is.null(share_matrix)) {
+      stop(sprintf("Missing labor share matrix for base year %s.", base_year))
+    }
     for (flow in flows) {
       for (partner in partners) {
         exposure_matrix <- matrix(0, nrow = length(district_ids), ncol = length(years))
@@ -542,4 +579,3 @@ assemble_panel <- function(exposures, outcomes, instruments, params) {
 
   panel
 }
-

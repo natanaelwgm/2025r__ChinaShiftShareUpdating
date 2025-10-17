@@ -20,6 +20,16 @@ ensure_directories <- function(paths) {
   }
 }
 
+reset_directory <- function(path) {
+  if (dir.exists(path)) {
+    targets <- list.files(path, full.names = TRUE, all.files = TRUE, no.. = TRUE)
+    if (length(targets) > 0) {
+      unlink(targets, recursive = TRUE, force = TRUE)
+    }
+  }
+  dir.create(path, recursive = TRUE, showWarnings = FALSE)
+}
+
 write_csv_safe <- function(df, path) {
   dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
   utils::write.csv(df, path, row.names = FALSE)
@@ -30,7 +40,7 @@ write_partitioned_csv <- function(df, output_dir, prefix, split_cols = "year") {
   if (!all(split_cols %in% names(df))) {
     stop("All split columns must exist in data frame for partitioned write.")
   }
-  ensure_directories(output_dir)
+  reset_directory(output_dir)
   split_list <- split(df, df[split_cols], drop = TRUE)
   written_paths <- character(length(split_list))
   idx <- 1L
@@ -45,6 +55,29 @@ write_partitioned_csv <- function(df, output_dir, prefix, split_cols = "year") {
     idx <- idx + 1L
   }
   invisible(written_paths)
+}
+
+read_partitioned_csv <- function(dir_path, pattern = "\\.csv$") {
+  if (!dir.exists(dir_path)) {
+    stop(sprintf("Directory '%s' not found.", dir_path))
+  }
+  files <- list.files(dir_path, pattern = pattern, full.names = TRUE)
+  if (length(files) == 0) {
+    stop(sprintf("No CSV files found in '%s'.", dir_path))
+  }
+  dfs <- lapply(files, utils::read.csv, stringsAsFactors = FALSE)
+  do.call(rbind, dfs)
+}
+
+ensure_non_empty_dir <- function(dir_path, label) {
+  if (!dir.exists(dir_path)) {
+    stop(sprintf("Expected %s directory at '%s', but it does not exist.", label, dir_path))
+  }
+  files <- list.files(dir_path, pattern = "\\.csv$", full.names = TRUE)
+  if (length(files) == 0) {
+    stop(sprintf("Expected CSV files for %s in '%s', but none were found.", label, dir_path))
+  }
+  invisible(files)
 }
 
 artifact_path <- function(globals, category, filename) {

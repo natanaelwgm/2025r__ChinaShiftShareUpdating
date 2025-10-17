@@ -8,6 +8,10 @@ load_config <- function(config_dir = "config") {
   }
 
   globals <- yaml::read_yaml(globals_path)
+  if (!exists("%||%")) {
+    `%||%` <- function(x, y) if (is.null(x)) y else x
+  }
+  globals$execution$mode <- globals$execution$mode %||% "dummy"
   params <- yaml::read_yaml(params_path)
   schemas <- yaml::read_yaml(schemas_path)
 
@@ -17,4 +21,3 @@ load_config <- function(config_dir = "config") {
     schemas = schemas
   )
 }
-

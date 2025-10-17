@@ -73,6 +73,31 @@ if (command == "clean") {
 }
 
 run_pipeline <- function() {
+  config <- load_config("config")
+  globals <- config$globals
+  params <- config$params
+
+  mode <- tolower(globals$execution$mode)
+  if (!mode %in% c("dummy", "real")) {
+    stop(sprintf("Unsupported execution mode '%s'. Use 'dummy' or 'real'.", mode))
+  }
+  is_dummy_mode <- identical(mode, "dummy")
+
+  raw_mode_dir <- file.path(globals$paths$raw, mode)
+  raw_sakernas_dir <- file.path(raw_mode_dir, "sakernas")
+  raw_trade_dir <- file.path(raw_mode_dir, "trade")
+  raw_susenas_dir <- file.path(raw_mode_dir, "susenas")
+
+  interim_mode_dir <- file.path(globals$paths$interim, mode)
+  clean_sakernas_dir <- file.path(interim_mode_dir, "clean_sakernas")
+  clean_trade_dir <- file.path(interim_mode_dir, "clean_trade")
+  clean_susenas_dir <- file.path(interim_mode_dir, "clean_susenas")
+
+  processed_mode_dir <- file.path(globals$paths$processed, mode)
+  output_mode_dir <- file.path(globals$paths$output, mode)
+  results_dir <- file.path(output_mode_dir, "results")
+  diagnostics_dir <- file.path(output_mode_dir, "diagnostics")
+
   overall_start <- Sys.time()
   step_idx <- 0L
   step_label <- function(label) {
@@ -80,27 +105,30 @@ run_pipeline <- function() {
     sprintf("Step %02d - %s", step_idx, label)
   }
 
-  config <- with_step(step_label("Load configuration"), load_config("config"))
-  globals <- config$globals
-  params <- config$params
-
   with_step(step_label("Check required packages"), {
     ensure_packages(c("jsonlite", "fixest"))
   })
 
   with_step(step_label("Prepare directory structure"), {
-    ensure_directories(unlist(globals$paths, use.names = FALSE))
-    ensure_directories(c(
-      file.path(globals$paths$processed, "results"),
-      file.path(globals$paths$output, "results"),
-      file.path(globals$paths$output, "diagnostics"),
-      file.path(globals$paths$raw, "sakernas"),
-      file.path(globals$paths$raw, "trade"),
-      file.path(globals$paths$raw, "susenas")
-    ))
+    if (is_dummy_mode) {
+      ensure_directories(c(raw_sakernas_dir, raw_trade_dir, raw_susenas_dir))
+    } else {
+      ensure_non_empty_dir(raw_sakernas_dir, "Sakernas raw")
+      ensure_non_empty_dir(raw_trade_dir, "Trade raw")
+      ensure_non_empty_dir(raw_susenas_dir, "Susenas raw")
+    }
+    reset_directory(clean_sakernas_dir)
+    reset_directory(clean_trade_dir)
+    reset_directory(clean_susenas_dir)
+    reset_directory(processed_mode_dir)
+    reset_directory(results_dir)
+    reset_directory(diagnostics_dir)
+    ensure_directories(c(globals$paths$logs, globals$paths$meta))
+
+    log_info(sprintf("Mode: %s", mode))
     log_info(sprintf("Data root: %s", normalizePath(globals$paths$data_root, mustWork = FALSE)))
-    log_info(sprintf("Processed path: %s", normalizePath(globals$paths$processed, mustWork = FALSE)))
-    log_info(sprintf("Output path: %s", normalizePath(globals$paths$output, mustWork = FALSE)))
+    log_info(sprintf("Processed path: %s", normalizePath(processed_mode_dir, mustWork = FALSE)))
+    log_info(sprintf("Output path: %s", normalizePath(results_dir, mustWork = FALSE)))
   })
 
   seed <- globals$execution$seed
@@ -123,65 +151,66 @@ run_pipeline <- function() {
   })
 
   years <- dims$dim_time_year$year
-  sakernas_bundle <- with_step(step_label("Generate raw labor (SAKERNAS)"), {
-    bundle <- generate_sakernas_raw(
-      dim_geo = dims$dim_geo_district_2000,
-      dim_sector = dims$dim_sector_isic_rev3,
-      years = years,
-      params = params,
-      seed = seed
-    )
-    raw_dir <- file.path(globals$paths$raw, "sakernas")
-    written <- write_partitioned_csv(bundle$raw, raw_dir, "sakernas_micro", split_cols = "year")
-    if (length(written) > 0) {
-      log_info(sprintf("    SAKERNAS yearly files: %d (e.g., %s)", length(written), basename(written[1])))
+
+  sakernas_raw <- with_step(step_label("Generate raw labor (SAKERNAS)"), {
+    if (is_dummy_mode) {
+      raw_df <- generate_sakernas_raw(
+        dim_geo = dims$dim_geo_district_2000,
+        dim_sector = dims$dim_sector_isic_rev3,
+        years = years,
+        params = params,
+        seed = seed
+      )
+      written <- write_partitioned_csv(raw_df, raw_sakernas_dir, "sakernas_micro", split_cols = "year")
+      if (length(written) > 0) {
+        log_info(sprintf("    SAKERNAS yearly files: %d (e.g., %s)", length(written), basename(written[1])))
+      }
+      raw_df
     } else {
-      log_info("    SAKERNAS yearly files: none generated")
+      read_partitioned_csv(raw_sakernas_dir)
     }
-    legacy_path <- file.path(globals$paths$raw, "sakernas_micro.csv")
-    if (file.exists(legacy_path)) unlink(legacy_path)
-    bundle
   })
 
   labor_info <- with_step(step_label("Process labor facts"), {
+    clean_prefix <- if (is_dummy_mode) "dummy_clean_sakernas" else "clean_sakernas"
+    write_partitioned_csv(sakernas_raw, clean_sakernas_dir, clean_prefix, split_cols = "year")
     info <- process_sakernas_raw(
-      sakernas_bundle,
-      dims$dim_geo_district_2000,
-      dims$dim_sector_isic_rev3
+      sakernas_raw,
+      dim_geo = dims$dim_geo_district_2000,
+      dim_sector = dims$dim_sector_isic_rev3,
+      params = params
     )
     log_info(sprintf("    Labor fact rows: %d", nrow(info$fact_labor)))
     info
   })
-  rm(sakernas_bundle)
 
   trade_raw <- with_step(step_label("Generate raw trade (HS)"), {
-    tr <- generate_trade_raw(
-      dims$dim_sector_isic_rev3,
-      params$analysis$partners,
-      params$analysis$flows,
-      years,
-      concordance,
-      seed
-    )
-    log_info(sprintf("    Raw HS trade rows: %d", nrow(tr)))
-    raw_dir <- file.path(globals$paths$raw, "trade")
-    written <- write_partitioned_csv(tr, raw_dir, "trade_hs", split_cols = "year")
-    if (length(written) > 0) {
-      log_info(sprintf("    Trade yearly files: %d (e.g., %s)", length(written), basename(written[1])))
+    if (is_dummy_mode) {
+      tr <- generate_trade_raw(
+        dims$dim_sector_isic_rev3,
+        params$analysis$partners,
+        params$analysis$flows,
+        years,
+        concordance,
+        seed
+      )
+      written <- write_partitioned_csv(tr, raw_trade_dir, "trade_hs", split_cols = "year")
+      if (length(written) > 0) {
+        log_info(sprintf("    Trade yearly files: %d (e.g., %s)", length(written), basename(written[1])))
+      }
+      tr
     } else {
-      log_info("    Trade yearly files: none generated")
+      read_partitioned_csv(raw_trade_dir)
     }
-    legacy_path <- file.path(globals$paths$raw, "trade_hs.csv")
-    if (file.exists(legacy_path)) unlink(legacy_path)
-    tr
   })
 
   fact_trade <- with_step(step_label("Process trade facts"), {
     ft <- process_trade_raw(trade_raw, concordance)
+    clean_prefix <- if (is_dummy_mode) "dummy_clean_trade_isic" else "clean_trade_isic"
+    write_partitioned_csv(ft, clean_trade_dir, clean_prefix, split_cols = "year")
     log_info(sprintf("    Trade fact rows: %d", nrow(ft)))
     ft
   })
-  rm(trade_raw)
 
   national_shock <- with_step(step_label("Compute national shocks"), {
     shock <- compute_national_shocks(fact_trade)
@@ -208,32 +237,31 @@ run_pipeline <- function() {
   })
 
   susenas_raw <- with_step(step_label("Generate raw SUSENAS households"), {
-    raw_df <- generate_susenas_raw(
-      dim_geo = dims$dim_geo_district_2000,
-      years = years,
-      exposures = exposures,
-      params = params,
-      seed = seed
-    )
-    log_info(sprintf("    SUSENAS household rows: %d", nrow(raw_df)))
-    raw_dir <- file.path(globals$paths$raw, "susenas")
-    written <- write_partitioned_csv(raw_df, raw_dir, "susenas_micro", split_cols = "year")
-    if (length(written) > 0) {
-      log_info(sprintf("    SUSENAS yearly files: %d (e.g., %s)", length(written), basename(written[1])))
+    if (is_dummy_mode) {
+      raw_df <- generate_susenas_raw(
+        dim_geo = dims$dim_geo_district_2000,
+        years = years,
+        exposures = exposures,
+        params = params,
+        seed = seed
+      )
+      written <- write_partitioned_csv(raw_df, raw_susenas_dir, "susenas_micro", split_cols = "year")
+      if (length(written) > 0) {
+        log_info(sprintf("    SUSENAS yearly files: %d (e.g., %s)", length(written), basename(written[1])))
+      }
+      raw_df
     } else {
-      log_info("    SUSENAS yearly files: none generated")
+      read_partitioned_csv(raw_susenas_dir)
     }
-    legacy_path <- file.path(globals$paths$raw, "susenas_micro.csv")
-    if (file.exists(legacy_path)) unlink(legacy_path)
-    raw_df
   })
 
   outcomes <- with_step(step_label("Process SUSENAS outcomes"), {
+    clean_prefix <- if (is_dummy_mode) "dummy_clean_susenas" else "clean_susenas"
+    write_partitioned_csv(susenas_raw, clean_susenas_dir, clean_prefix, split_cols = "year")
     out_df <- process_susenas_raw(susenas_raw)
     log_info(sprintf("    Outcome rows: %d", nrow(out_df)))
     out_df
   })
-  rm(susenas_raw)
 
   panel <- with_step(step_label("Assemble analysis panel"), {
     pnl <- assemble_panel(
@@ -255,66 +283,65 @@ run_pipeline <- function() {
 
   with_step(step_label("Persist processed artifacts"), {
     log_output_path("dim_time_year", write_csv_safe(dims$dim_time_year,
-      artifact_path(globals, "processed", "dim_time_year.csv")))
+                   file.path(processed_mode_dir, "dim_time_year.csv")))
     log_output_path("dim_geo_district_2000", write_csv_safe(dims$dim_geo_district_2000,
-      artifact_path(globals, "processed", "dim_geo_district_2000.csv")))
+                   file.path(processed_mode_dir, "dim_geo_district_2000.csv")))
     log_output_path("dim_sector_isic_rev3", write_csv_safe(dims$dim_sector_isic_rev3,
-      artifact_path(globals, "processed", "dim_sector_isic_rev3.csv")))
+                   file.path(processed_mode_dir, "dim_sector_isic_rev3.csv")))
     log_output_path("dim_partner", write_csv_safe(dims$dim_partner,
-      artifact_path(globals, "processed", "dim_partner.csv")))
+                   file.path(processed_mode_dir, "dim_partner.csv")))
+
     log_output_path("map_hs_to_isic", write_csv_safe(concordance,
-      artifact_path(globals, "processed", "map_hs_to_isic.csv")))
+                   file.path(processed_mode_dir, "map_hs_to_isic.csv")))
+
     log_output_path("fact_labor_district_isic_year", write_csv_safe(labor_info$fact_labor,
-      artifact_path(globals, "processed", "fact_labor_district_isic_year.csv")))
+                   file.path(processed_mode_dir, "fact_labor_district_isic_year.csv")))
     log_output_path("fact_trade_isic_partner_year_flow", write_csv_safe(fact_trade,
-      artifact_path(globals, "processed", "fact_trade_isic_partner_year_flow.csv")))
+                   file.path(processed_mode_dir, "fact_trade_isic_partner_year_flow.csv")))
     log_output_path("fact_national_shock_isic_year", write_csv_safe(national_shock,
-      artifact_path(globals, "processed", "fact_national_shock_isic_year.csv")))
+                   file.path(processed_mode_dir, "fact_national_shock_isic_year.csv")))
     log_output_path("fact_poverty_district_year", write_csv_safe(outcomes,
-      artifact_path(globals, "processed", "fact_poverty_district_year.csv")))
+                   file.path(processed_mode_dir, "fact_poverty_district_year.csv")))
     log_output_path("exposure_district_year", write_csv_safe(exposures,
-      artifact_path(globals, "processed", "exposure_district_year.csv")))
+                   file.path(processed_mode_dir, "exposure_district_year.csv")))
     log_output_path("instrument_district_year", write_csv_safe(instruments,
-      artifact_path(globals, "processed", "instrument_district_year.csv")))
+                   file.path(processed_mode_dir, "instrument_district_year.csv")))
     log_output_path("panel_analysis", write_csv_safe(panel,
-      artifact_path(globals, "processed", "panel_analysis.csv")))
+                   file.path(processed_mode_dir, "panel_analysis.csv")))
   })
 
   with_step(step_label("Write results and diagnostics"), {
-    results_dir <- file.path(globals$paths$output, "results")
-    diagnostics_dir <- file.path(globals$paths$output, "diagnostics")
-
-    for (outcome in params$analysis$outcomes) {
-      outcome_df <- estimation_results$main[estimation_results$main$outcome == outcome, , drop = FALSE]
-      if (nrow(outcome_df) > 0) {
-        log_output_path(sprintf("result_main_%s", outcome), write_csv_safe(
-          outcome_df,
-          file.path(results_dir, sprintf("main_%s.csv", outcome))
-        ))
-      } else {
-        log_info(sprintf("    No regression rows for outcome '%s'", outcome))
-      }
-    }
+    log_output_path("result_main_p0", write_csv_safe(
+      estimation_results$main[estimation_results$main$outcome == "p0", , drop = FALSE],
+      file.path(results_dir, "main_p0.csv")
+    ))
+    log_output_path("result_main_p1", write_csv_safe(
+      estimation_results$main[estimation_results$main$outcome == "p1", , drop = FALSE],
+      file.path(results_dir, "main_p1.csv")
+    ))
+    log_output_path("result_main_p2", write_csv_safe(
+      estimation_results$main[estimation_results$main$outcome == "p2", , drop = FALSE],
+      file.path(results_dir, "main_p2.csv")
+    ))
 
     log_output_path("result_first_stage", write_csv_safe(
       estimation_results$first_stage,
       file.path(results_dir, "first_stage.csv")
     ))
 
-    validation_path <- file.path(diagnostics_dir, "validation_report.json")
-    report <- run_validations(labor_info, exposures, instruments, estimation_results)
-    write_validation_report(report, validation_path)
-    log_output_path("validation_report", validation_path)
+    validation <- run_validations(labor_info, exposures, instruments, estimation_results, params)
+    write_validation_report(
+      validation,
+      file.path(diagnostics_dir, "validation_report.json")
+    )
+    log_output_path("validation_report", file.path(diagnostics_dir, "validation_report.json"))
   })
 
   total_elapsed <- as.numeric(difftime(Sys.time(), overall_start, units = "secs"))
   log_info(sprintf("Pipeline finished successfully in %s", format_duration(total_elapsed)))
-  log_info(sprintf("Processed artifacts available at: %s", normalizePath(globals$paths$processed, mustWork = FALSE)))
-  log_info(sprintf("Results available at: %s", normalizePath(file.path(globals$paths$output, "results"), mustWork = FALSE)))
-  log_info(sprintf("Diagnostics available at: %s", normalizePath(file.path(globals$paths$output, "diagnostics"), mustWork = FALSE)))
+  log_info(sprintf("Processed artifacts available at: %s", normalizePath(processed_mode_dir, mustWork = FALSE)))
+  log_info(sprintf("Results available at: %s", normalizePath(results_dir, mustWork = FALSE)))
+  log_info(sprintf("Diagnostics available at: %s", normalizePath(diagnostics_dir, mustWork = FALSE)))
   log_info("Re-run with: Rscript scripts/R/orchestrate.R run")
 }
-
-if (command == "run") {
-  run_pipeline()
-}
+run_pipeline()
