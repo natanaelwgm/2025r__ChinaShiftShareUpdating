@@ -1,0 +1,15 @@
+# Global configuration for dummy pipeline
+paths:
+  data_root: data_work
+  raw: data_work/raw
+  interim: data_work/interim
+  processed: data_work/processed
+  output: data_work/output
+  logs: data_work/logs
+  meta: data_work/meta
+execution:
+  seed: 20251017
+  threads: 4
+  python_only: true
+logging:
+  level: INFO

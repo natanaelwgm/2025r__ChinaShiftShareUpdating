@@ -1,0 +1,56 @@
+# Column-level schemas for all artifacts
+artifacts:
+  dim_time_year:
+    columns:
+      year: int
+      era_label: str
+  dim_geo_district_2000:
+    columns:
+      district_bps_2000: int
+      prov_code: int
+      district_name: str
+  dim_sector_isic_rev3:
+    columns:
+      isic_rev3_3d: int
+      industry_name: str
+  dim_partner:
+    columns:
+      iso3: str
+      name: str
+  map_hs_to_isic:
+    columns:
+      hs6: str
+      hs_rev: str
+      isic_rev3_3d: int
+      allocation_share: float
+      source: str
+  fact_trade_isic_partner_year_flow:
+    columns:
+      isic_rev3_3d: int
+      partner_iso3: str
+      year: int
+      flow_code: str
+      value_usd_nominal: float
+      value_usd_real_2008: float
+  exposure_district_year:
+    columns:
+      district_bps_2000: int
+      year: int
+      flow_code: str
+      partner_iso3: str
+      base_year: int
+      exposure_log_diff: float
+  result_main:
+    columns:
+      table_id: str
+      outcome: str
+      flow: str
+      partner: str
+      base_year: int
+      period: str
+      coef: float
+      se: float
+      N: int
+      clusters: int
+      fe_flags: str
+      iv_label: str

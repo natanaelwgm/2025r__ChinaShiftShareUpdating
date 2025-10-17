@@ -1,0 +1,20 @@
+# Analysis and generation parameters
+analysis:
+  outcomes: [p0, p1, p2]
+  flows: [import, export]
+  partners: [CHN, USA, JPN, WLD_minus_IDN]
+  base_years: [2000, 2008]
+  periods: [2000_2007, 2008_2012, 2000_2015]
+  iv_sets: [chn_wld_minus_idn_lag1, usa_lag1, jpn_lag1]
+  transforms:
+    exposure: log_diff
+    instrument: log_diff_lag1
+  estimation:
+    fe: [district, year]
+    cluster: district_bps_2000
+    robust: true
+dummy_data:
+  n_districts: 288
+  n_industries: 20
+  year_range: [2000, 2015]
+  noise_scale: 0.2
