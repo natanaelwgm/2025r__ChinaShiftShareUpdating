@@ -52,8 +52,15 @@ build/
 .RData
 .Rproj.user/
 
+# Pipeline outputs (synthetic/generated)
+data_work/raw/
+data_work/interim/
+data_work/processed/
+data_work/output/
+data_work/logs/
+data_work/meta/
+
 # Environment files
 .env
 .env.*
 !.env.example
-

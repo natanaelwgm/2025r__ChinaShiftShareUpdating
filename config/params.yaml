@@ -18,3 +18,5 @@ dummy_data:
   n_industries: 20
   year_range: [2000, 2015]
   noise_scale: 0.2
+  sakernas_workers_per_dy: 400
+  susenas_households_per_dy: 320
