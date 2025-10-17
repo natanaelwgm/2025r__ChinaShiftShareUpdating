@@ -90,28 +90,24 @@ if (!dir.exists(tables_dir)) dir.create(tables_dir, recursive = TRUE, showWarnin
 latex_table_path <- file.path(tables_dir, sprintf("%s_import_CHN.tex", outcome))
 latex_doc_path <- file.path(tables_dir, sprintf("%s_import_CHN_doc.tex", outcome))
 
-if (!requireNamespace("knitr", quietly = TRUE)) {
-  install.packages("knitr", repos = "https://cloud.r-project.org")
-}
-if (!requireNamespace("kableExtra", quietly = TRUE)) {
-  install.packages("kableExtra", repos = "https://cloud.r-project.org")
+
+if (!requireNamespace("xtable", quietly = TRUE)) {
+  install.packages("xtable", repos = "https://cloud.r-project.org")
 }
 
-suppressPackageStartupMessages({
-  library(knitr)
-  library(kableExtra)
-})
+suppressPackageStartupMessages(library(xtable))
+latex_body <- xtable(table_df,
+  caption = sprintf("Impact of Import Exposure on %s (selected specs)", toupper(outcome)),
+  label = sprintf("tab:%s_import_spec", outcome)
+)
 
-latex_body <- kbl(
-  table_df,
-  format = "latex",
-  booktabs = TRUE,
-  align = c("l", rep("c", ncol(table_df) - 1)),
-  caption = NULL
-) %>%
-  kable_styling(full_width = FALSE)
+col_count <- ncol(table_df)
+align_vec <- c("p{4cm}", rep(">{\\centering\\arraybackslash}p{2.6cm}", col_count - 1))
+align(latex_body) <- c("p{4cm}", align_vec)
 
-writeLines(as.character(latex_body), con = latex_table_path)
+sanitize <- function(x) gsub('_', '\\_', x, fixed = TRUE)
+print(latex_body, file = latex_table_path, include.rownames = FALSE, booktabs = TRUE,
+      sanitize.text.function = sanitize, floating = FALSE)
 
 latex_doc <- sprintf(
 "\\documentclass[10pt]{article}
