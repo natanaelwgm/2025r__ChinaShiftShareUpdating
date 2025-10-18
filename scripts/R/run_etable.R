@@ -7,6 +7,9 @@ suppressPackageStartupMessages({
   if (!requireNamespace("fixest", quietly = TRUE)) {
     stop("Package 'fixest' is required. Install it before running this script.")
   }
+  if (!requireNamespace("yaml", quietly = TRUE)) {
+    stop("Package 'yaml' is required. Install it before running this script.")
+  }
   library(optparse)
   library(fixest)
 })
@@ -21,21 +24,16 @@ TRANSFORM_ORDER <- c(
 CONTROL_CANDIDATES <- c("urban_share", "share_hs_or_above", "literacy_rate")
 get_cluster_var <- function() {
   config_path <- file.path("config", "params.yaml")
-  cluster <- NA_character_
-  if (file.exists(config_path)) {
-    lines <- readLines(config_path, warn = FALSE)
-    pattern <- "^\\s*cluster\\s*:\\s*(.+)\\s*$"
-    match_idx <- grep(pattern, lines)
-    if (length(match_idx) > 0) {
-      cluster <- sub(pattern, "\\1", lines[match_idx[1]])
-    }
+  if (!file.exists(config_path)) {
+    return("district_bps_2000")
   }
-  cluster <- trimws(cluster)
-  if (length(cluster) == 0 || is.na(cluster)) {
-    "district_bps_2000"
-  } else {
-    cluster
-  }
+  params <- yaml::read_yaml(config_path)
+  cluster <- tryCatch(
+    params$analysis$estimation$cluster,
+    error = function(e) NULL
+  )
+  cluster <- trimws(if (is.null(cluster)) "" else cluster)
+  if (cluster == "") "district_bps_2000" else cluster
 }
 
 option_list <- list(
