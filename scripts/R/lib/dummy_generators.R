@@ -326,7 +326,79 @@ compute_national_shocks <- function(fact_trade) {
   do.call(rbind, shock_records)
 }
 
-generate_exposures <- function(shock_df, trade_df, labor_info, dim_geo, dim_sector, params) {
+generate_tariff_series <- function(dim_sector, partners, years, seed) {
+  set.seed(seed + 223L)
+  industry_ids <- dim_sector$isic_rev3_3d
+  records <- vector("list", length(industry_ids) * length(partners) * length(years))
+  idx <- 1L
+
+  for (industry in industry_ids) {
+    industry_effect <- rnorm(1, 0, 0.12)
+    for (partner in partners) {
+      partner_bias <- switch(
+        partner,
+        CHN = 0.25,
+        USA = 0.18,
+        JPN = 0.12,
+        WLD_minus_IDN = 0.2,
+        0.15
+      )
+      base_rate <- plogis(industry_effect + partner_bias) * 0.35 + 0.03
+      annual_shock <- cumsum(rnorm(length(years), 0, 0.015))
+      trend <- seq(-0.03, 0.04, length.out = length(years))
+
+      for (y_idx in seq_along(years)) {
+        year <- years[y_idx]
+        tariff_rate <- base_rate + trend[y_idx] + annual_shock[y_idx] + rnorm(1, 0, 0.01)
+        tariff_rate <- pmax(0.005, tariff_rate)
+        records[[idx]] <- data.frame(
+          isic_rev3_3d = industry,
+          partner_iso3 = partner,
+          year = year,
+          flow_code = "tariff",
+          value_usd_nominal = tariff_rate,
+          value_usd_real_2008 = tariff_rate,
+          stringsAsFactors = FALSE
+        )
+        idx <- idx + 1L
+      }
+    }
+  }
+
+  do.call(rbind, records)
+}
+
+compute_tariff_shocks <- function(fact_tariff) {
+  fact_tariff <- fact_tariff[order(
+    fact_tariff$isic_rev3_3d,
+    fact_tariff$partner_iso3,
+    fact_tariff$year
+  ), ]
+
+  grouped <- split(
+    fact_tariff,
+    list(fact_tariff$isic_rev3_3d, fact_tariff$partner_iso3),
+    drop = TRUE
+  )
+
+  shock_records <- lapply(grouped, function(df) {
+    tariffs <- pmax(df$value_usd_real_2008, 0.0005)
+    shock <- log(1 + tariffs) - log(1 + c(NA, tariffs[-length(tariffs)]))
+    shock[is.na(shock)] <- 0
+    data.frame(
+      isic_rev3_3d = df$isic_rev3_3d,
+      partner_iso3 = df$partner_iso3,
+      year = df$year,
+      flow_code = "tariff",
+      shock_log_diff = shock,
+      stringsAsFactors = FALSE
+    )
+  })
+
+  do.call(rbind, shock_records)
+}
+
+generate_exposures <- function(shock_df, trade_df, tariff_df, labor_info, dim_geo, dim_sector, params) {
   years <- sort(unique(shock_df$year))
   base_years <- params$analysis$base_years
   flows <- params$analysis$flows
@@ -355,6 +427,7 @@ generate_exposures <- function(shock_df, trade_df, labor_info, dim_geo, dim_sect
       for (partner in partners) {
         exposure_level <- matrix(0, nrow = length(district_ids), ncol = length(years))
         exposure_log_diff <- matrix(0, nrow = length(district_ids), ncol = length(years))
+        base_source <- if (identical(flow, "tariff")) tariff_df else trade_df
         for (ind_idx in seq_along(industry_ids)) {
           industry <- industry_ids[ind_idx]
           shock_subset <- shock_df[
@@ -367,18 +440,18 @@ generate_exposures <- function(shock_df, trade_df, labor_info, dim_geo, dim_sect
           shock_subset <- shock_subset[match(years, shock_subset$year), , drop = FALSE]
           shock_vector <- shock_subset$shock_log_diff
           shock_vector[is.na(shock_vector)] <- 0
-          trade_subset <- trade_df[
-            trade_df$isic_rev3_3d == industry &
-              trade_df$partner_iso3 == partner &
-              trade_df$flow_code == flow,
+          base_subset <- base_source[
+            base_source$isic_rev3_3d == industry &
+              base_source$partner_iso3 == partner &
+              base_source$flow_code == flow,
             ,
             drop = FALSE
           ]
-          trade_subset <- trade_subset[match(years, trade_subset$year), , drop = FALSE]
-          trade_values <- trade_subset$value_usd_real_2008
-          trade_values[is.na(trade_values)] <- 0
+          base_subset <- base_subset[match(years, base_subset$year), , drop = FALSE]
+          base_values <- base_subset$value_usd_real_2008
+          base_values[is.na(base_values)] <- 0
 
-          exposure_level <- exposure_level + share_matrix[, ind_idx, drop = FALSE] %*% t(trade_values)
+          exposure_level <- exposure_level + share_matrix[, ind_idx, drop = FALSE] %*% t(base_values)
           exposure_log_diff <- exposure_log_diff + share_matrix[, ind_idx, drop = FALSE] %*% t(shock_vector)
         }
 

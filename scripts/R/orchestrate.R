@@ -35,6 +35,8 @@ pipeline_steps <- c(
   "Generate raw trade (HS)",
   "Process trade facts",
   "Compute national shocks",
+  "Generate tariff series",
+  "Compute tariff shocks",
   "Build exposures",
   "Build instruments",
   "Generate raw SUSENAS households",
@@ -218,10 +220,29 @@ run_pipeline <- function() {
     shock
   })
 
+  fact_tariff <- with_step(step_label("Generate tariff series"), {
+    tf <- generate_tariff_series(
+      dim_sector = dims$dim_sector_isic_rev3,
+      partners = params$analysis$partners,
+      years = years,
+      seed = seed
+    )
+    log_info(sprintf("    Tariff fact rows: %d", nrow(tf)))
+    tf
+  })
+
+  tariff_shock <- with_step(step_label("Compute tariff shocks"), {
+    ts <- compute_tariff_shocks(fact_tariff)
+    log_info(sprintf("    Tariff shock rows: %d", nrow(ts)))
+    ts
+  })
+
   exposures <- with_step(step_label("Build exposures"), {
+    combined_shock <- rbind(national_shock, tariff_shock)
     exp_df <- generate_exposures(
-      shock_df = national_shock,
+      shock_df = combined_shock,
       trade_df = fact_trade,
+      tariff_df = fact_tariff,
       labor_info = labor_info,
       dim_geo = dims$dim_geo_district_2000,
       dim_sector = dims$dim_sector_isic_rev3,
@@ -299,8 +320,12 @@ run_pipeline <- function() {
                    file.path(processed_mode_dir, "fact_labor_district_isic_year.csv")))
     log_output_path("fact_trade_isic_partner_year_flow", write_csv_safe(fact_trade,
                    file.path(processed_mode_dir, "fact_trade_isic_partner_year_flow.csv")))
+    log_output_path("fact_tariff_isic_partner_year", write_csv_safe(fact_tariff,
+                   file.path(processed_mode_dir, "fact_tariff_isic_partner_year.csv")))
     log_output_path("fact_national_shock_isic_year", write_csv_safe(national_shock,
                    file.path(processed_mode_dir, "fact_national_shock_isic_year.csv")))
+    log_output_path("fact_tariff_shock_isic_year", write_csv_safe(tariff_shock,
+                   file.path(processed_mode_dir, "fact_tariff_shock_isic_year.csv")))
     log_output_path("fact_poverty_district_year", write_csv_safe(outcomes,
                    file.path(processed_mode_dir, "fact_poverty_district_year.csv")))
     log_output_path("exposure_district_year", write_csv_safe(exposures,

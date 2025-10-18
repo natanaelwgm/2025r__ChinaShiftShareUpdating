@@ -32,6 +32,21 @@ artifacts:
       flow_code: str
       value_usd_nominal: float
       value_usd_real_2008: float
+  fact_tariff_isic_partner_year:
+    columns:
+      isic_rev3_3d: int
+      partner_iso3: str
+      year: int
+      flow_code: str
+      value_usd_nominal: float
+      value_usd_real_2008: float
+  fact_tariff_shock_isic_year:
+    columns:
+      isic_rev3_3d: int
+      partner_iso3: str
+      year: int
+      flow_code: str
+      shock_log_diff: float
   exposure_district_year:
     columns:
       district_bps_2000: int
