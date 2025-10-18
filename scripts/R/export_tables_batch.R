@@ -42,7 +42,7 @@ if (nrow(group_keys) == 0) {
 group_keys <- head(group_keys, num_groups)
 
 if (!requireNamespace("xtable", quietly = TRUE)) {
-  install.packages("xtable", repos = "https://cloud.r-project.org")
+  stop("Package 'xtable' is required. Install it before running this script.")
 }
 suppressPackageStartupMessages(library(xtable))
 

@@ -46,7 +46,7 @@ if (nrow(subset_specs) == 0) {
 }
 
 if (!requireNamespace("xtable", quietly = TRUE)) {
-  install.packages("xtable", repos = "https://cloud.r-project.org")
+  stop("Package 'xtable' is required. Install it before running this script.")
 }
 suppressPackageStartupMessages(library(xtable))
 
