@@ -30,6 +30,9 @@ run_2sls <- function(data, outcome_var, exposure_var, instrument_var, controls, 
     "0"
   }
 
+  # In fixest, the endogenous regressor is supplied through the IV block (third part
+  # of the formula). Keeping it out of the structural RHS avoids double-counting and
+  # still lets coeftable report the exposure coefficient.
   rhs_terms <- if (length(controls) > 0) {
     paste(controls, collapse = " + ")
   } else {
