@@ -47,6 +47,19 @@ artifacts:
       year: int
       flow_code: str
       shock_log_diff: float
+  instrument_district_year:
+    columns:
+      district_bps_2000: int
+      year: int
+      base_year: int
+      flow_code: str
+      iv_label: str
+      instrument_level_lag1: float
+      instrument_level_diff_lag1: float
+      instrument_level_diff_lag2: float
+      instrument_log_lag1: float
+      instrument_log_diff_lag1: float
+      instrument_log_diff_lag2: float
   exposure_district_year:
     columns:
       district_bps_2000: int

@@ -186,12 +186,14 @@ run_pipeline <- function() {
     info
   })
 
+  trade_flows <- setdiff(params$analysis$flows, "tariff")
+
   trade_raw <- with_step(step_label("Generate raw trade (HS)"), {
     if (is_dummy_mode) {
       tr <- generate_trade_raw(
         dims$dim_sector_isic_rev3,
         params$analysis$partners,
-        params$analysis$flows,
+        trade_flows,
         years,
         concordance,
         seed
@@ -206,8 +208,13 @@ run_pipeline <- function() {
     }
   })
 
+  trade_flows <- setdiff(params$analysis$flows, "tariff")
+
   fact_trade <- with_step(step_label("Process trade facts"), {
     ft <- process_trade_raw(trade_raw, concordance)
+    if (length(trade_flows) > 0) {
+      ft <- ft[ft$flow_code %in% trade_flows, , drop = FALSE]
+    }
     clean_prefix <- if (is_dummy_mode) "dummy_clean_trade_isic" else "clean_trade_isic"
     write_partitioned_csv(ft, clean_trade_dir, clean_prefix, split_cols = "year")
     log_info(sprintf("    Trade fact rows: %d", nrow(ft)))

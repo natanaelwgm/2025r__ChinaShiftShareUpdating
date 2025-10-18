@@ -218,6 +218,19 @@ generate_trade_raw <- function(dim_sector, partners, flows, years, concordance, 
   records <- list()
   idx <- 1L
 
+  if (length(flows) == 0) {
+    return(data.frame(
+      year = integer(0),
+      hs6 = character(0),
+      hs_rev = character(0),
+      partner_iso3 = character(0),
+      flow_code = character(0),
+      trade_value_nominal = numeric(0),
+      deflator_2008 = numeric(0),
+      stringsAsFactors = FALSE
+    ))
+  }
+
   for (industry in industry_ids) {
     industry_effect <- rnorm(1, 0, 0.2)
     mapping <- concordance[concordance$isic_rev3_3d == industry, ]
@@ -269,6 +282,17 @@ generate_trade_raw <- function(dim_sector, partners, flows, years, concordance, 
 }
 
 process_trade_raw <- function(trade_raw, concordance) {
+  if (nrow(trade_raw) == 0) {
+    return(data.frame(
+      isic_rev3_3d = integer(0),
+      partner_iso3 = character(0),
+      year = integer(0),
+      flow_code = character(0),
+      value_usd_nominal = numeric(0),
+      value_usd_real_2008 = numeric(0),
+      stringsAsFactors = FALSE
+    ))
+  }
   merged <- merge(
     trade_raw,
     concordance,
@@ -500,6 +524,7 @@ generate_exposures <- function(shock_df, trade_df, tariff_df, labor_info, dim_ge
 
 generate_instruments <- function(exposure_df, params) {
   base_years <- params$analysis$base_years
+  flows <- params$analysis$flows
   instruments <- list()
   idx <- 1L
 
@@ -509,86 +534,96 @@ generate_instruments <- function(exposure_df, params) {
   )
   available_cols <- intersect(required_cols, names(exposure_df))
 
-  for (base_year in base_years) {
-    base_subset <- exposure_df[
-      exposure_df$base_year == base_year & exposure_df$flow_code == "import",
+  flows_available <- intersect(flows, unique(exposure_df$flow_code))
+
+  for (flow in flows_available) {
+    flow_subset <- exposure_df[
+      exposure_df$flow_code == flow,
       available_cols,
       drop = FALSE
     ]
-    if (nrow(base_subset) == 0) {
+    if (nrow(flow_subset) == 0) {
       next
     }
 
-    # China minus Rest of World instrument
-    chn <- base_subset[base_subset$partner_iso3 == "CHN", , drop = FALSE]
-    wld <- base_subset[base_subset$partner_iso3 == "WLD_minus_IDN", , drop = FALSE]
-    if (nrow(chn) > 0 && nrow(wld) > 0) {
-      diff_df <- merge(
-        chn,
-        wld,
-        by = c("district_bps_2000", "year"),
-        suffixes = c("_chn", "_wld")
-      )
-      if (nrow(diff_df) > 0) {
-        inst_df <- diff_df[, c("district_bps_2000", "year")]
+    for (base_year in base_years) {
+      base_subset <- flow_subset[flow_subset$base_year == base_year, , drop = FALSE]
+      if (nrow(base_subset) == 0) {
+        next
+      }
+
+      chn <- base_subset[base_subset$partner_iso3 == "CHN", , drop = FALSE]
+      wld <- base_subset[base_subset$partner_iso3 == "WLD_minus_IDN", , drop = FALSE]
+      if (nrow(chn) > 0 && nrow(wld) > 0) {
+        diff_df <- merge(
+          chn,
+          wld,
+          by = c("district_bps_2000", "year"),
+          suffixes = c("_chn", "_wld")
+        )
+        if (nrow(diff_df) > 0) {
+          inst_df <- diff_df[, c("district_bps_2000", "year")]
+          inst_df$base_year <- base_year
+          inst_df$flow_code <- flow
+          inst_df$iv_label <- "chn_wld_minus_idn_lag1"
+
+          groups <- list(inst_df$district_bps_2000)
+          inst_df$instrument_level_lag1 <- group_lag(
+            diff_df$exposure_level_chn - diff_df$exposure_level_wld,
+            groups,
+            1L
+          )
+          inst_df$instrument_level_diff_lag1 <- group_lag(
+            diff_df$exposure_level_diff_chn - diff_df$exposure_level_diff_wld,
+            groups,
+            1L
+          )
+          inst_df$instrument_level_diff_lag2 <- group_lag(
+            diff_df$exposure_level_diff_chn - diff_df$exposure_level_diff_wld,
+            groups,
+            2L
+          )
+          inst_df$instrument_log_lag1 <- group_lag(
+            diff_df$exposure_log_chn - diff_df$exposure_log_wld,
+            groups,
+            1L
+          )
+          inst_df$instrument_log_diff_lag1 <- group_lag(
+            diff_df$exposure_log_diff_chn - diff_df$exposure_log_diff_wld,
+            groups,
+            1L
+          )
+          inst_df$instrument_log_diff_lag2 <- group_lag(
+            diff_df$exposure_log_diff_chn - diff_df$exposure_log_diff_wld,
+            groups,
+            2L
+          )
+          instruments[[idx]] <- inst_df
+          idx <- idx + 1L
+        }
+      }
+
+      for (partner in c("USA", "JPN")) {
+        partner_df <- base_subset[base_subset$partner_iso3 == partner, , drop = FALSE]
+        if (nrow(partner_df) == 0) {
+          next
+        }
+        inst_df <- partner_df[, c("district_bps_2000", "year")]
         inst_df$base_year <- base_year
-        inst_df$iv_label <- "chn_wld_minus_idn_lag1"
+        inst_df$flow_code <- flow
+        inst_df$iv_label <- if (partner == "USA") "usa_lag1" else "jpn_lag1"
 
         groups <- list(inst_df$district_bps_2000)
-        inst_df$instrument_level_lag1 <- group_lag(
-          diff_df$exposure_level_chn - diff_df$exposure_level_wld,
-          groups,
-          1L
-        )
-        inst_df$instrument_level_diff_lag1 <- group_lag(
-          diff_df$exposure_level_diff_chn - diff_df$exposure_level_diff_wld,
-          groups,
-          1L
-        )
-        inst_df$instrument_level_diff_lag2 <- group_lag(
-          diff_df$exposure_level_diff_chn - diff_df$exposure_level_diff_wld,
-          groups,
-          2L
-        )
-        inst_df$instrument_log_lag1 <- group_lag(
-          diff_df$exposure_log_chn - diff_df$exposure_log_wld,
-          groups,
-          1L
-        )
-        inst_df$instrument_log_diff_lag1 <- group_lag(
-          diff_df$exposure_log_diff_chn - diff_df$exposure_log_diff_wld,
-          groups,
-          1L
-        )
-        inst_df$instrument_log_diff_lag2 <- group_lag(
-          diff_df$exposure_log_diff_chn - diff_df$exposure_log_diff_wld,
-          groups,
-          2L
-        )
+        inst_df$instrument_level_lag1 <- group_lag(partner_df$exposure_level, groups, 1L)
+        inst_df$instrument_level_diff_lag1 <- group_lag(partner_df$exposure_level_diff, groups, 1L)
+        inst_df$instrument_level_diff_lag2 <- group_lag(partner_df$exposure_level_diff, groups, 2L)
+        inst_df$instrument_log_lag1 <- group_lag(partner_df$exposure_log, groups, 1L)
+        inst_df$instrument_log_diff_lag1 <- group_lag(partner_df$exposure_log_diff, groups, 1L)
+        inst_df$instrument_log_diff_lag2 <- group_lag(partner_df$exposure_log_diff, groups, 2L)
+
         instruments[[idx]] <- inst_df
         idx <- idx + 1L
       }
-    }
-
-    for (partner in c("USA", "JPN")) {
-      partner_df <- base_subset[base_subset$partner_iso3 == partner, , drop = FALSE]
-      if (nrow(partner_df) == 0) {
-        next
-      }
-      inst_df <- partner_df[, c("district_bps_2000", "year")]
-      inst_df$base_year <- base_year
-      inst_df$iv_label <- if (partner == "USA") "usa_lag1" else "jpn_lag1"
-
-      groups <- list(inst_df$district_bps_2000)
-      inst_df$instrument_level_lag1 <- group_lag(partner_df$exposure_level, groups, 1L)
-      inst_df$instrument_level_diff_lag1 <- group_lag(partner_df$exposure_level_diff, groups, 1L)
-      inst_df$instrument_level_diff_lag2 <- group_lag(partner_df$exposure_level_diff, groups, 2L)
-      inst_df$instrument_log_lag1 <- group_lag(partner_df$exposure_log, groups, 1L)
-      inst_df$instrument_log_diff_lag1 <- group_lag(partner_df$exposure_log_diff, groups, 1L)
-      inst_df$instrument_log_diff_lag2 <- group_lag(partner_df$exposure_log_diff, groups, 2L)
-
-      instruments[[idx]] <- inst_df
-      idx <- idx + 1L
     }
   }
 
@@ -597,6 +632,7 @@ generate_instruments <- function(exposure_df, params) {
       district_bps_2000 = integer(0),
       year = integer(0),
       base_year = integer(0),
+      flow_code = character(0),
       iv_label = character(0),
       instrument_level_lag1 = numeric(0),
       instrument_level_diff_lag1 = numeric(0),
@@ -761,12 +797,26 @@ assemble_panel <- function(exposures, outcomes, instruments, params) {
     panel <- merge(
       panel,
       instruments,
-      by = c("district_bps_2000", "year", "base_year"),
+      by = c("district_bps_2000", "year", "base_year", "flow_code"),
       all.x = TRUE
     )
-  } else {
+  }
+
+  if (!"iv_label" %in% names(panel)) {
     panel$iv_label <- NA_character_
-    panel$instrument_log_diff_lag1 <- NA_real_
+  }
+  numeric_iv_cols <- c(
+    "instrument_level_lag1",
+    "instrument_level_diff_lag1",
+    "instrument_level_diff_lag2",
+    "instrument_log_lag1",
+    "instrument_log_diff_lag1",
+    "instrument_log_diff_lag2"
+  )
+  for (col in numeric_iv_cols) {
+    if (!col %in% names(panel)) {
+      panel[[col]] <- NA_real_
+    }
   }
 
   periods <- params$analysis$periods
