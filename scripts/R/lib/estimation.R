@@ -1,13 +1,3 @@
-choose_iv_label <- function(partner) {
-  mapping <- list(
-    CHN = "chn_wld_minus_idn_lag1",
-    USA = "usa_lag1",
-    JPN = "jpn_lag1",
-    WLD_minus_IDN = "chn_wld_minus_idn_lag1"
-  )
-  mapping[[partner]]
-}
-
 run_2sls <- function(data, outcome_var, exposure_var, instrument_var, controls, cluster_var, fe_spec) {
   fe_map <- c(district = "district_bps_2000")
   fe_columns <- if (length(fe_spec) > 0) {
@@ -141,6 +131,7 @@ estimate_grid <- function(panel, params) {
   controls <- c("urban_share", "share_hs_or_above", "literacy_rate")
   cluster_var <- params$analysis$estimation$cluster
   fe_spec <- params$analysis$estimation$fe
+  iv_labels <- params$analysis$iv_sets
 
   transform_specs <- list(
     list(
@@ -249,105 +240,103 @@ estimate_grid <- function(panel, params) {
   for (outcome in outcomes) {
     for (flow in flows) {
       for (partner in partners) {
-        iv_label <- choose_iv_label(partner)
-        if (is.null(iv_label)) {
-          next
-        }
-        for (base_year in base_years) {
-          subset_panel <- panel[
-            panel$flow_code == flow &
-              panel$partner_iso3 == partner &
-              panel$base_year == base_year &
-              panel$iv_label == iv_label,
-            ,
-            drop = FALSE
-          ]
-
-          if (nrow(subset_panel) == 0) {
-            next
-          }
-
-          for (period_label in periods) {
-            bounds <- period_to_bounds(period_label)
-            period_data <- subset_panel[
-              subset_panel$year >= bounds[1] &
-                subset_panel$year <= bounds[2],
+        for (iv_label in iv_labels) {
+          for (base_year in base_years) {
+            subset_panel <- panel[
+              panel$flow_code == flow &
+                panel$partner_iso3 == partner &
+                panel$base_year == base_year &
+                panel$iv_label == iv_label,
               ,
               drop = FALSE
             ]
 
-            if (nrow(period_data) == 0) {
+            if (nrow(subset_panel) == 0) {
               next
             }
 
-            for (transform in transform_specs) {
-              outcome_var <- paste0(outcome, "_", transform$outcome_suffix)
-              if (!all(c(outcome_var, transform$exposure_var, transform$instrument_var) %in% names(period_data))) {
+            for (period_label in periods) {
+              bounds <- period_to_bounds(period_label)
+              period_data <- subset_panel[
+                subset_panel$year >= bounds[1] &
+                  subset_panel$year <= bounds[2],
+                ,
+                drop = FALSE
+              ]
+
+              if (nrow(period_data) == 0) {
                 next
               }
 
-              result <- run_2sls(
-                data = period_data,
-                outcome_var = outcome_var,
-                exposure_var = transform$exposure_var,
-                instrument_var = transform$instrument_var,
-                controls = controls,
-                cluster_var = cluster_var,
-                fe_spec = fe_spec
-              )
+              for (transform in transform_specs) {
+                outcome_var <- paste0(outcome, "_", transform$outcome_suffix)
+                if (!all(c(outcome_var, transform$exposure_var, transform$instrument_var) %in% names(period_data))) {
+                  next
+                }
 
-              if (is.null(result)) {
-                next
+                result <- run_2sls(
+                  data = period_data,
+                  outcome_var = outcome_var,
+                  exposure_var = transform$exposure_var,
+                  instrument_var = transform$instrument_var,
+                  controls = controls,
+                  cluster_var = cluster_var,
+                  fe_spec = fe_spec
+                )
+
+                if (is.null(result)) {
+                  next
+                }
+
+                table_id <- paste(
+                  outcome,
+                  flow,
+                  partner,
+                  base_year,
+                  iv_label,
+                  period_label,
+                  transform$id,
+                  sep = "__"
+                )
+
+                main_results[[idx_main]] <- data.frame(
+                  table_id = table_id,
+                  outcome = outcome,
+                  outcome_var = outcome_var,
+                  flow = flow,
+                  partner = partner,
+                  base_year = base_year,
+                  period = period_label,
+                  iv_label = iv_label,
+                  transform_id = transform$id,
+                  transform_label = transform$label,
+                  exposure_var = transform$exposure_var,
+                  instrument_var = transform$instrument_var,
+                  x_timing = transform$x_timing,
+                  coef = result$beta,
+                  se = result$se,
+                  N = result$N,
+                  clusters = result$clusters,
+                  fe_flags = result$fe_flags,
+                  stringsAsFactors = FALSE
+                )
+                idx_main <- idx_main + 1L
+
+                first_stage_results[[idx_first]] <- data.frame(
+                  outcome_x = paste(outcome, flow, partner, base_year, transform$id, sep = "__"),
+                  instrument = iv_label,
+                  transform_id = transform$id,
+                  transform_label = transform$label,
+                  exposure_var = transform$exposure_var,
+                  instrument_var = transform$instrument_var,
+                  F_partial = result$f_partial,
+                  R2_first = result$r2_first,
+                  N = result$N,
+                  period = period_label,
+                  stringsAsFactors = FALSE
+                )
+                idx_first <- idx_first + 1L
               }
-
-              table_id <- paste(
-                outcome,
-                flow,
-                partner,
-                base_year,
-                iv_label,
-                period_label,
-                transform$id,
-                sep = "__"
-              )
-
-              main_results[[idx_main]] <- data.frame(
-                table_id = table_id,
-                outcome = outcome,
-                outcome_var = outcome_var,
-                flow = flow,
-                partner = partner,
-                base_year = base_year,
-                period = period_label,
-                iv_label = iv_label,
-                transform_id = transform$id,
-                transform_label = transform$label,
-                exposure_var = transform$exposure_var,
-                instrument_var = transform$instrument_var,
-                x_timing = transform$x_timing,
-                coef = result$beta,
-                se = result$se,
-                N = result$N,
-                clusters = result$clusters,
-                fe_flags = result$fe_flags,
-                stringsAsFactors = FALSE
-              )
-              idx_main <- idx_main + 1L
-
-              first_stage_results[[idx_first]] <- data.frame(
-                outcome_x = paste(outcome, flow, partner, base_year, transform$id, sep = "__"),
-                instrument = iv_label,
-                transform_id = transform$id,
-                transform_label = transform$label,
-                exposure_var = transform$exposure_var,
-                instrument_var = transform$instrument_var,
-                F_partial = result$f_partial,
-                R2_first = result$r2_first,
-                N = result$N,
-                period = period_label,
-                stringsAsFactors = FALSE
-              )
-              idx_first <- idx_first + 1L
             }
           }
         }
