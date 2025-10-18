@@ -487,8 +487,8 @@ generate_exposures <- function(shock_df, trade_df, tariff_df, labor_info, dim_ge
         records$flow_code <- flow
         records$partner_iso3 <- partner
         records$base_year <- base_year
-        records$exposure_level <- as.vector(t(exposure_level))
-        records$exposure_log_diff <- as.vector(t(exposure_log_diff))
+        records$exposure_level <- as.vector(exposure_level)
+        records$exposure_log_diff <- as.vector(exposure_log_diff)
 
         exposures[[idx]] <- records
         idx <- idx + 1L
