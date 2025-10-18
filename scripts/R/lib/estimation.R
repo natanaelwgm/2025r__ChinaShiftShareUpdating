@@ -30,12 +30,10 @@ run_2sls <- function(data, outcome_var, exposure_var, instrument_var, controls, 
     "0"
   }
 
-  rhs_terms <- c(exposure_var, controls)
-  rhs_terms <- rhs_terms[rhs_terms != ""]
-  if (length(rhs_terms) == 0) {
-    rhs_terms <- "1"
+  rhs_terms <- if (length(controls) > 0) {
+    paste(controls, collapse = " + ")
   } else {
-    rhs_terms <- paste(rhs_terms, collapse = " + ")
+    "1"
   }
   main_formula <- stats::as.formula(paste(
     outcome_var, "~", rhs_terms,

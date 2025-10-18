@@ -2,7 +2,7 @@
 
 suppressPackageStartupMessages({
   if (!requireNamespace("optparse", quietly = TRUE)) {
-    install.packages("optparse", repos = "https://cloud.r-project.org")
+    stop("Package 'optparse' is required. Install it before running this script.")
   }
   library(optparse)
 })
@@ -92,7 +92,7 @@ latex_doc_path <- file.path(tables_dir, sprintf("%s_import_CHN_doc.tex", outcome
 
 
 if (!requireNamespace("xtable", quietly = TRUE)) {
-  install.packages("xtable", repos = "https://cloud.r-project.org")
+  stop("Package 'xtable' is required. Install it before running this script.")
 }
 
 suppressPackageStartupMessages(library(xtable))
