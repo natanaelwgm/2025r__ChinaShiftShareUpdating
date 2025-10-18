@@ -19,17 +19,42 @@ run_validations <- function(labor_info, exposures, instruments, estimation_resul
     }
   }
 
-  exposure_var <- stats::var(exposures$exposure_log_diff, na.rm = TRUE)
-  instrument_non_missing <- mean(!is.na(instruments$instrument_log_diff_lag1))
+  exposure_var_level <- if ("exposure_level" %in% names(exposures)) {
+    stats::var(exposures$exposure_level, na.rm = TRUE)
+  } else {
+    NA_real_
+  }
+  exposure_var_logdiff <- if ("exposure_log_diff" %in% names(exposures)) {
+    stats::var(exposures$exposure_log_diff, na.rm = TRUE)
+  } else {
+    NA_real_
+  }
+
+  instrument_cols <- intersect(
+    c(
+      "instrument_level_lag1",
+      "instrument_level_diff_lag1",
+      "instrument_level_diff_lag2",
+      "instrument_log_lag1",
+      "instrument_log_diff_lag1",
+      "instrument_log_diff_lag2"
+    ),
+    names(instruments)
+  )
+  instrument_metrics <- lapply(instrument_cols, function(col) {
+    mean(!is.na(instruments[[col]]))
+  })
+  names(instrument_metrics) <- paste0("instrument_non_missing_", instrument_cols)
 
   c(
     share_metrics,
     list(
-      exposure_variance = exposure_var,
-      instrument_non_missing_ratio = instrument_non_missing,
+      exposure_level_variance = exposure_var_level,
+      exposure_log_diff_variance = exposure_var_logdiff,
       regression_rows = nrow(estimation_results$main),
       first_stage_rows = nrow(estimation_results$first_stage)
-    )
+    ),
+    instrument_metrics
   )
 }
 

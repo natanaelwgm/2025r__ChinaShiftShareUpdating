@@ -221,6 +221,7 @@ run_pipeline <- function() {
   exposures <- with_step(step_label("Build exposures"), {
     exp_df <- generate_exposures(
       shock_df = national_shock,
+      trade_df = fact_trade,
       labor_info = labor_info,
       dim_geo = dims$dim_geo_district_2000,
       dim_sector = dims$dim_sector_isic_rev3,

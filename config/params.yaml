@@ -3,6 +3,7 @@ analysis:
   outcomes: [p0, p1, p2]
   flows: [import, export]
   partners: [CHN, USA, JPN, WLD_minus_IDN]
+  estimation_partners: [CHN]
   base_years: [2000, 2008]
   periods: [2000_2007, 2008_2012, 2000_2015]
   iv_sets: [chn_wld_minus_idn_lag1, usa_lag1, jpn_lag1]

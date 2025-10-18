@@ -106,7 +106,31 @@ apply_period_flag <- function(years, period_label) {
 lag_vector <- function(x, n = 1L) {
   if (n < 0L) stop("n must be non-negative")
   if (n == 0L) return(x)
+  if (length(x) <= n) {
+    return(rep(NA, length(x)))
+  }
   c(rep(NA, n), x[seq_len(length(x) - n)])
+}
+
+group_lag <- function(x, groups, n = 1L) {
+  if (n < 0L) stop("n must be non-negative")
+  if (!is.list(groups)) {
+    groups <- list(groups)
+  }
+  ave(x, groups, FUN = function(values) lag_vector(values, n))
+}
+
+group_diff <- function(x, groups) {
+  if (!is.list(groups)) {
+    groups <- list(groups)
+  }
+  ave(x, groups, FUN = function(values) {
+    if (length(values) <= 1L) {
+      rep(NA_real_, length(values))
+    } else {
+      c(NA, diff(values))
+    }
+  })
 }
 
 format_duration <- function(seconds) {

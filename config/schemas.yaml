@@ -39,18 +39,33 @@ artifacts:
       flow_code: str
       partner_iso3: str
       base_year: int
+      exposure_level: float
+      exposure_level_lag1: float
+      exposure_level_diff: float
+      exposure_level_diff_lag1: float
+      exposure_level_diff_lag2: float
+      exposure_log: float
+      exposure_log_lag1: float
       exposure_log_diff: float
+      exposure_log_diff_lag1: float
+      exposure_log_diff_lag2: float
   result_main:
     columns:
       table_id: str
       outcome: str
+      outcome_var: str
       flow: str
       partner: str
       base_year: int
       period: str
+      iv_label: str
+      transform_id: str
+      transform_label: str
+      exposure_var: str
+      instrument_var: str
+      x_timing: str
       coef: float
       se: float
       N: int
       clusters: int
       fe_flags: str
-      iv_label: str
