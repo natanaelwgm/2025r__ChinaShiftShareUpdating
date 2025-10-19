@@ -53,12 +53,31 @@ build/
 .Rproj.user/
 
 # Pipeline outputs (synthetic/generated)
-data_work/raw/
-data_work/interim/
-data_work/processed/
-data_work/output/
-data_work/logs/
-data_work/meta/
+# Ignore generated artifacts but keep documentation READMEs
+# raw
+data_work/raw/**
+!data_work/raw/
+!data_work/raw/README.md
+# interim
+data_work/interim/**
+!data_work/interim/
+!data_work/interim/README.md
+# processed
+data_work/processed/**
+!data_work/processed/
+!data_work/processed/README.md
+# output
+data_work/output/**
+!data_work/output/
+!data_work/output/README.md
+# logs
+data_work/logs/**
+!data_work/logs/
+!data_work/logs/README.md
+# meta
+data_work/meta/**
+!data_work/meta/
+!data_work/meta/README.md
 
 # Environment files
 .env
