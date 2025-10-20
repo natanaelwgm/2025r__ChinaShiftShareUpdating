@@ -1,0 +1,18 @@
+{
+  "share2000_mean": 1,
+  "share2000_min": 1,
+  "share2000_max": 1,
+  "share2008_mean": 1,
+  "share2008_min": 1,
+  "share2008_max": 1,
+  "exposure_level_variance": 177090921.7442,
+  "exposure_log_diff_variance": 0.0006,
+  "regression_rows": 1944,
+  "first_stage_rows": 1944,
+  "instrument_non_missing_instrument_level_lag1": 0.9375,
+  "instrument_non_missing_instrument_level_diff_lag1": 0.875,
+  "instrument_non_missing_instrument_level_diff_lag2": 0.8125,
+  "instrument_non_missing_instrument_log_lag1": 0.9375,
+  "instrument_non_missing_instrument_log_diff_lag1": 0.9375,
+  "instrument_non_missing_instrument_log_diff_lag2": 0.875
+}

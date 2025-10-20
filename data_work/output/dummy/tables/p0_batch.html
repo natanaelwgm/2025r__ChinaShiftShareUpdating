@@ -1,0 +1,2191 @@
+<html><head>
+
+    <style>
+      body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 2rem; }
+      h2 { margin-top: 3rem; }
+      table { border-collapse: collapse; margin-bottom: 1rem; }
+      th, td { border: 1px solid #999; padding: 6px 10px; text-align: center; }
+      th:first-child, td:first-child { text-align: left; font-weight: 600; }
+      .spec-block { page-break-after: always; }
+      .spec-block:last-child { page-break-after: auto; }
+      .meta { font-style: italic; margin: 0.5rem 0; color: #555; }
+    </style>
+    
+</head><body>
+<h1>Specification Tables &mdash; Outcome P0 (mode: dummy)</h1>
+<p class='meta'>Each block corresponds to one flow/partner combination. Exposure coefficients display conventional significance stars based on cluster-robust SEs.</p>
+<div class='spec-block'>
+<h2>Spec 01: flow = export, partner = CHN</h2>
+<p class='meta'>Start of Spec 01</p>
+<h3>Level (y_t, x_t)</h3>
+<p class='meta'>Transform ID: level_t | X timing: t | Exposure var: exposure_level | Instrument var: instrument_level_lag1</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>-0.000</td>
+      <td>-0.000</td>
+      <td>-0.000</td>
+      <td>-0.000</td>
+      <td>0.000</td>
+      <td>-0.000</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Δ Level (y_t, x_t)</h3>
+<p class='meta'>Transform ID: diff_t | X timing: t | Exposure var: exposure_level_diff | Instrument var: instrument_level_diff_lag1</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>-0.000</td>
+      <td>0.000</td>
+      <td>-0.000</td>
+      <td>-0.000</td>
+      <td>0.000</td>
+      <td>-0.000</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>1728</td>
+      <td>1440</td>
+      <td>4032</td>
+      <td>1728</td>
+      <td>1440</td>
+      <td>4032</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Δ Level lag (y_{t-1}, x_{t-1})</h3>
+<p class='meta'>Transform ID: difflag_t | X timing: t | Exposure var: exposure_level_diff_lag1 | Instrument var: instrument_level_diff_lag1</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000*</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>1728</td>
+      <td>1440</td>
+      <td>4032</td>
+      <td>1728</td>
+      <td>1440</td>
+      <td>4032</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Log (y_t, x_t)</h3>
+<p class='meta'>Transform ID: log_t | X timing: t | Exposure var: exposure_log | Instrument var: instrument_log_lag1</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>-1.900</td>
+      <td>16.440</td>
+      <td>5.357</td>
+      <td>8.319</td>
+      <td>2.536</td>
+      <td>10.460</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(27.338)</td>
+      <td>(26.476)</td>
+      <td>(20.984)</td>
+      <td>(11.166)</td>
+      <td>(11.864)</td>
+      <td>(14.674)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Δ Log (y_t, x_t)</h3>
+<p class='meta'>Transform ID: logdiff_t | X timing: t | Exposure var: exposure_log_diff | Instrument var: instrument_log_diff_lag1</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>-88.051</td>
+      <td>28.975</td>
+      <td>-21.945</td>
+      <td>-17.357</td>
+      <td>-16.823</td>
+      <td>14.547</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(174.255)</td>
+      <td>(92.327)</td>
+      <td>(90.100)</td>
+      <td>(145.922)</td>
+      <td>(124.723)</td>
+      <td>(83.726)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Δ Log lag (y_{t-1}, x_{t-1})</h3>
+<p class='meta'>Transform ID: logdifflag_t | X timing: t | Exposure var: exposure_log_diff_lag1 | Instrument var: instrument_log_diff_lag1</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>-10.431</td>
+      <td>4.589</td>
+      <td>-3.290</td>
+      <td>-9.159</td>
+      <td>1.681</td>
+      <td>-1.201</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(12.958)</td>
+      <td>(13.952)</td>
+      <td>(7.637)</td>
+      <td>(15.626)</td>
+      <td>(16.290)</td>
+      <td>(8.660)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>1728</td>
+      <td>1440</td>
+      <td>4032</td>
+      <td>1728</td>
+      <td>1440</td>
+      <td>4032</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Level (y_t, x_{t-1})</h3>
+<p class='meta'>Transform ID: level_xtlag | X timing: t-1 | Exposure var: exposure_level_lag1 | Instrument var: instrument_level_lag1</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Δ Level (y_t, x_{t-1})</h3>
+<p class='meta'>Transform ID: diff_xtlag | X timing: t-1 | Exposure var: exposure_level_diff_lag1 | Instrument var: instrument_level_diff_lag1</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>0.000</td>
+      <td>-0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>-0.000</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>1728</td>
+      <td>1440</td>
+      <td>4032</td>
+      <td>1728</td>
+      <td>1440</td>
+      <td>4032</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Δ Level lag (y_{t-1}, x_{t-2})</h3>
+<p class='meta'>Transform ID: difflag_xtlag | X timing: t-2 | Exposure var: exposure_level_diff_lag2 | Instrument var: instrument_level_diff_lag2</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>1440</td>
+      <td>1440</td>
+      <td>3744</td>
+      <td>1440</td>
+      <td>1440</td>
+      <td>3744</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Log (y_t, x_{t-1})</h3>
+<p class='meta'>Transform ID: log_xtlag | X timing: t-1 | Exposure var: exposure_log_lag1 | Instrument var: instrument_log_lag1</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>0.236</td>
+      <td>-2.163</td>
+      <td>-0.516</td>
+      <td>-2.844</td>
+      <td>1.265</td>
+      <td>-1.535</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(3.399)</td>
+      <td>(3.149)</td>
+      <td>(1.967)</td>
+      <td>(3.756)</td>
+      <td>(5.878)</td>
+      <td>(2.114)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Δ Log (y_t, x_{t-1})</h3>
+<p class='meta'>Transform ID: logdiff_xtlag | X timing: t-1 | Exposure var: exposure_log_diff_lag1 | Instrument var: instrument_log_diff_lag1</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>7.230</td>
+      <td>-5.530</td>
+      <td>2.179</td>
+      <td>2.019</td>
+      <td>3.100</td>
+      <td>-1.645</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(13.624)</td>
+      <td>(17.524)</td>
+      <td>(8.936)</td>
+      <td>(16.941)</td>
+      <td>(22.861)</td>
+      <td>(9.423)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Δ Log lag (y_{t-1}, x_{t-2})</h3>
+<p class='meta'>Transform ID: logdifflag_xtlag | X timing: t-2 | Exposure var: exposure_log_diff_lag2 | Instrument var: instrument_log_diff_lag2</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>12.885</td>
+      <td>-3.098</td>
+      <td>1.861</td>
+      <td>6.564</td>
+      <td>0.060</td>
+      <td>-1.186</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(16.020)</td>
+      <td>(21.052)</td>
+      <td>(9.213)</td>
+      <td>(19.920)</td>
+      <td>(22.827)</td>
+      <td>(9.620)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>1728</td>
+      <td>1440</td>
+      <td>4032</td>
+      <td>1728</td>
+      <td>1440</td>
+      <td>4032</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<p class='meta'>End of Spec 01</p>
+</div>
+<div class='spec-block'>
+<h2>Spec 02: flow = import, partner = CHN</h2>
+<p class='meta'>Start of Spec 02</p>
+<h3>Level (y_t, x_t)</h3>
+<p class='meta'>Transform ID: level_t | X timing: t | Exposure var: exposure_level | Instrument var: instrument_level_lag1</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>-0.000</td>
+      <td>-0.000</td>
+      <td>-0.000</td>
+      <td>-0.000</td>
+      <td>0.000</td>
+      <td>-0.000</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Δ Level (y_t, x_t)</h3>
+<p class='meta'>Transform ID: diff_t | X timing: t | Exposure var: exposure_level_diff | Instrument var: instrument_level_diff_lag1</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>-0.000</td>
+      <td>0.000</td>
+      <td>-0.000</td>
+      <td>-0.000</td>
+      <td>0.000</td>
+      <td>-0.000</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>1728</td>
+      <td>1440</td>
+      <td>4032</td>
+      <td>1728</td>
+      <td>1440</td>
+      <td>4032</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Δ Level lag (y_{t-1}, x_{t-1})</h3>
+<p class='meta'>Transform ID: difflag_t | X timing: t | Exposure var: exposure_level_diff_lag1 | Instrument var: instrument_level_diff_lag1</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000*</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>1728</td>
+      <td>1440</td>
+      <td>4032</td>
+      <td>1728</td>
+      <td>1440</td>
+      <td>4032</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Log (y_t, x_t)</h3>
+<p class='meta'>Transform ID: log_t | X timing: t | Exposure var: exposure_log | Instrument var: instrument_log_lag1</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>-1.523</td>
+      <td>12.323</td>
+      <td>4.224</td>
+      <td>8.240</td>
+      <td>2.789</td>
+      <td>10.352</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(21.911)</td>
+      <td>(19.125)</td>
+      <td>(16.431)</td>
+      <td>(11.043)</td>
+      <td>(13.057)</td>
+      <td>(14.501)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Δ Log (y_t, x_t)</h3>
+<p class='meta'>Transform ID: logdiff_t | X timing: t | Exposure var: exposure_log_diff | Instrument var: instrument_log_diff_lag1</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>-27.501</td>
+      <td>16.574</td>
+      <td>-17.949</td>
+      <td>-6.044</td>
+      <td>-6.655</td>
+      <td>7.820</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(52.348)</td>
+      <td>(52.701)</td>
+      <td>(74.059)</td>
+      <td>(50.644)</td>
+      <td>(48.986)</td>
+      <td>(44.913)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Δ Log lag (y_{t-1}, x_{t-1})</h3>
+<p class='meta'>Transform ID: logdifflag_t | X timing: t | Exposure var: exposure_log_diff_lag1 | Instrument var: instrument_log_diff_lag1</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>-4.983</td>
+      <td>2.235</td>
+      <td>-1.559</td>
+      <td>-4.497</td>
+      <td>0.707</td>
+      <td>-0.543</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(6.168)</td>
+      <td>(6.779)</td>
+      <td>(3.625)</td>
+      <td>(7.621)</td>
+      <td>(6.849)</td>
+      <td>(3.912)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>1728</td>
+      <td>1440</td>
+      <td>4032</td>
+      <td>1728</td>
+      <td>1440</td>
+      <td>4032</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Level (y_t, x_{t-1})</h3>
+<p class='meta'>Transform ID: level_xtlag | X timing: t-1 | Exposure var: exposure_level_lag1 | Instrument var: instrument_level_lag1</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Δ Level (y_t, x_{t-1})</h3>
+<p class='meta'>Transform ID: diff_xtlag | X timing: t-1 | Exposure var: exposure_level_diff_lag1 | Instrument var: instrument_level_diff_lag1</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>0.000</td>
+      <td>-0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>-0.000</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>1728</td>
+      <td>1440</td>
+      <td>4032</td>
+      <td>1728</td>
+      <td>1440</td>
+      <td>4032</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Δ Level lag (y_{t-1}, x_{t-2})</h3>
+<p class='meta'>Transform ID: difflag_xtlag | X timing: t-2 | Exposure var: exposure_level_diff_lag2 | Instrument var: instrument_level_diff_lag2</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+      <td>(0.000)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>1440</td>
+      <td>1440</td>
+      <td>3744</td>
+      <td>1440</td>
+      <td>1440</td>
+      <td>3744</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Log (y_t, x_{t-1})</h3>
+<p class='meta'>Transform ID: log_xtlag | X timing: t-1 | Exposure var: exposure_log_lag1 | Instrument var: instrument_log_lag1</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>0.218</td>
+      <td>-2.058</td>
+      <td>-0.480</td>
+      <td>-2.670</td>
+      <td>1.159</td>
+      <td>-1.426</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(3.135)</td>
+      <td>(2.997)</td>
+      <td>(1.832)</td>
+      <td>(3.532)</td>
+      <td>(5.382)</td>
+      <td>(1.963)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Δ Log (y_t, x_{t-1})</h3>
+<p class='meta'>Transform ID: logdiff_xtlag | X timing: t-1 | Exposure var: exposure_log_diff_lag1 | Instrument var: instrument_log_diff_lag1</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>3.409</td>
+      <td>-2.694</td>
+      <td>1.027</td>
+      <td>0.963</td>
+      <td>1.303</td>
+      <td>-0.739</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(6.428)</td>
+      <td>(8.550)</td>
+      <td>(4.213)</td>
+      <td>(8.074)</td>
+      <td>(9.595)</td>
+      <td>(4.233)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+      <td>2016</td>
+      <td>1440</td>
+      <td>4320</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Δ Log lag (y_{t-1}, x_{t-2})</h3>
+<p class='meta'>Transform ID: logdifflag_xtlag | X timing: t-2 | Exposure var: exposure_log_diff_lag2 | Instrument var: instrument_log_diff_lag2</p>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Variables</th>
+      <th>Base 2000, 2000–2007</th>
+      <th>Base 2000, 2008–2012</th>
+      <th>Base 2000, 2000–2015</th>
+      <th>Base 2008, 2000–2007</th>
+      <th>Base 2008, 2008–2012</th>
+      <th>Base 2008, 2000–2015</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exposure coefficient</td>
+      <td>6.029</td>
+      <td>-1.492</td>
+      <td>0.876</td>
+      <td>2.851</td>
+      <td>0.027</td>
+      <td>-0.544</td>
+    </tr>
+    <tr>
+      <td>Standard error</td>
+      <td>(7.484)</td>
+      <td>(10.132)</td>
+      <td>(4.340)</td>
+      <td>(8.612)</td>
+      <td>(10.324)</td>
+      <td>(4.409)</td>
+    </tr>
+    <tr>
+      <td>Observations</td>
+      <td>1728</td>
+      <td>1440</td>
+      <td>4032</td>
+      <td>1728</td>
+      <td>1440</td>
+      <td>4032</td>
+    </tr>
+    <tr>
+      <td>Clusters</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <td>Base year</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>2008</td>
+      <td>2008</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <td>Period</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+      <td>2000–2007</td>
+      <td>2008–2012</td>
+      <td>2000–2015</td>
+    </tr>
+    <tr>
+      <td>Instrument</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+      <td>chn_wld_minus_idn_lag1</td>
+    </tr>
+    <tr>
+      <td>Fixed effects</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+      <td>district_bps_2000+year</td>
+    </tr>
+  </tbody>
+</table>
+<p class='meta'>End of Spec 02</p>
+</div>
+<h2>Summary of included specifications</h2>
+<table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Spec</th>
+      <th>Flow</th>
+      <th>Partner</th>
+      <th>Transforms</th>
+      <th>Columns</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Spec 01</td>
+      <td>export</td>
+      <td>CHN</td>
+      <td>level_t (Level (y_t, x_t))<br>diff_t (Δ Level (y_t, x_t))<br>difflag_t (Δ Level lag (y_{t-1}, x_{t-1}))<br>log_t (Log (y_t, x_t))<br>logdiff_t (Δ Log (y_t, x_t))<br>logdifflag_t (Δ Log lag (y_{t-1}, x_{t-1}))<br>level_xtlag (Level (y_t, x_{t-1}))<br>diff_xtlag (Δ Level (y_t, x_{t-1}))<br>difflag_xtlag (Δ Level lag (y_{t-1}, x_{t-2}))<br>log_xtlag (Log (y_t, x_{t-1}))<br>logdiff_xtlag (Δ Log (y_t, x_{t-1}))<br>logdifflag_xtlag (Δ Log lag (y_{t-1}, x_{t-2}))</td>
+      <td>Level (y_t, x_t): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Δ Level (y_t, x_t): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Δ Level lag (y_{t-1}, x_{t-1}): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Log (y_t, x_t): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Δ Log (y_t, x_t): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Δ Log lag (y_{t-1}, x_{t-1}): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Level (y_t, x_{t-1}): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Δ Level (y_t, x_{t-1}): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Δ Level lag (y_{t-1}, x_{t-2}): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Log (y_t, x_{t-1}): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Δ Log (y_t, x_{t-1}): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Δ Log lag (y_{t-1}, x_{t-2}): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015</td>
+    </tr>
+    <tr>
+      <td>Spec 02</td>
+      <td>import</td>
+      <td>CHN</td>
+      <td>level_t (Level (y_t, x_t))<br>diff_t (Δ Level (y_t, x_t))<br>difflag_t (Δ Level lag (y_{t-1}, x_{t-1}))<br>log_t (Log (y_t, x_t))<br>logdiff_t (Δ Log (y_t, x_t))<br>logdifflag_t (Δ Log lag (y_{t-1}, x_{t-1}))<br>level_xtlag (Level (y_t, x_{t-1}))<br>diff_xtlag (Δ Level (y_t, x_{t-1}))<br>difflag_xtlag (Δ Level lag (y_{t-1}, x_{t-2}))<br>log_xtlag (Log (y_t, x_{t-1}))<br>logdiff_xtlag (Δ Log (y_t, x_{t-1}))<br>logdifflag_xtlag (Δ Log lag (y_{t-1}, x_{t-2}))</td>
+      <td>Level (y_t, x_t): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Δ Level (y_t, x_t): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Δ Level lag (y_{t-1}, x_{t-1}): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Log (y_t, x_t): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Δ Log (y_t, x_t): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Δ Log lag (y_{t-1}, x_{t-1}): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Level (y_t, x_{t-1}): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Δ Level (y_t, x_{t-1}): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Δ Level lag (y_{t-1}, x_{t-2}): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Log (y_t, x_{t-1}): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Δ Log (y_t, x_{t-1}): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015<br>Δ Log lag (y_{t-1}, x_{t-2}): Base 2000, 2000–2007, Base 2000, 2008–2012, Base 2000, 2000–2015, Base 2008, 2000–2007, Base 2008, 2008–2012, Base 2008, 2000–2015</td>
+    </tr>
+  </tbody>
+</table>
+</body></html>

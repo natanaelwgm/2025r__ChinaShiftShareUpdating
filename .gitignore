@@ -70,6 +70,16 @@ data_work/processed/**
 data_work/output/**
 !data_work/output/
 !data_work/output/README.md
+# retain published dummy artefacts
+!data_work/output/dummy/
+!data_work/output/dummy/results/
+!data_work/output/dummy/results/*.csv
+!data_work/output/dummy/tables/
+!data_work/output/dummy/tables/*.html
+!data_work/output/dummy/tables/*.tex
+!data_work/output/dummy/tables/*.pdf
+!data_work/output/dummy/diagnostics/
+!data_work/output/dummy/diagnostics/*.json
 # logs
 data_work/logs/**
 !data_work/logs/
